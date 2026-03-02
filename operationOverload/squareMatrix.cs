@@ -27,8 +27,15 @@ namespace operationOverload {
 
           }
         }
+    }
 
-      
+    public squareMatrix(double[,] newSqrtMatrix) {
+      int rows = newSqrtMatrix.GetLength(0);
+      int columns = newSqrtMatrix.GetLength(1);
+
+      if (rows != columns) {
+        throw new ArgumentException("Matrix should be square");
+      }
 
     }
 
