@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace operationOverload {
-  public class squareMatrix : IComparable<squareMatrix> {
+  public class squareMatrix : IComparable<squareMatrix>, ICloneable {
 
     private double[,] matrix;
     public int matrixSize;
     public const int hashValue = 31;
 
-    public squareMatrix(int size) {
-
+    private static int seed = 0;
+    public squareMatrix(int size, bool isRandGen) {
       if (size <= 0) {
         throw new ArgumentException("The matrix size must be greater than zero.");
       }
@@ -20,27 +20,57 @@ namespace operationOverload {
       matrixSize = size;
       matrix = new double[size, size];
 
-      Random randomGen = new Random();
+      Random randomGen = new Random(++seed + Environment.TickCount);
+      
       for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
-          matrix[row, col] = randomGen.Next(-10, 10);
+
+          if (isRandGen) {
+            matrix[row, col] = randomGen.Next(-10, 10);
+          } else {
+            matrix[row, col] = 0;
+          }
+
         }
       }
     }
 
-    public squareMatrix(double[,] newSqrtMatrix) {
-      int rows = newSqrtMatrix.GetLength(0);
-      int columns = newSqrtMatrix.GetLength(1);
+    //public squareMatrix(double[,] newSqrtMatrix) {
+    //  int rows = newSqrtMatrix.GetLength(0);
+    //  int columns = newSqrtMatrix.GetLength(1);
 
-      if (rows != columns) {
-        throw new ArgumentException("Matrix should be square");
+    //  if (rows != columns) {
+    //    throw new ArgumentException("Matrix should be square");
+    //  }
+
+    //  matrixSize = rows;
+    //  matrix = new double[matrixSize, matrixSize];
+
+    //  Array.Copy(newSqrtMatrix, matrix, newSqrtMatrix.Length);
+
+    //}
+
+    public static squareMatrix operator +(squareMatrix mat1, squareMatrix mat2) {
+
+      squareMatrix result = new squareMatrix(mat1.matrixSize, false);
+
+      for (int row = 0; row < mat1.matrixSize; ++row) {
+        for (int col = 0; col < mat1.matrixSize; ++col) {
+          result.matrix[row, col] = mat1.matrix[row, col] + mat2.matrix[row,col];
+        }
       }
+      return result;
+    }
 
-      matrixSize = rows;
-      matrix = new double[matrixSize, matrixSize];
+    public object Clone() {
+      squareMatrix result = new squareMatrix(matrixSize, false);
 
-      Array.Copy(newSqrtMatrix, matrix, newSqrtMatrix.Length);
-
+      for (int row = 0; row < matrixSize; ++row) {
+        for (int col = 0; col < matrixSize; ++col) {
+          result.matrix[row, col] = this.matrix[row, col];
+        }
+      }
+      return result;
     }
 
     public override string ToString() {
@@ -60,7 +90,7 @@ namespace operationOverload {
       throw new NotImplementedException();
     }
 
-    public override bool Equals(object obj) { 
+    public override bool Equals(object obj) {
       squareMatrix otherMatrix = obj as squareMatrix;
 
       if (this.matrixSize != otherMatrix.matrixSize) {
@@ -75,21 +105,17 @@ namespace operationOverload {
           }
         }
       }
-
       return true;
     }
 
     public override int GetHashCode() {
-
       int hash = matrixSize;
       foreach (double value in matrix) {
         hash = hash * hashValue + value.GetHashCode();
       }
-
       return hash;
-
-
     }
 
+  
   }
 }
