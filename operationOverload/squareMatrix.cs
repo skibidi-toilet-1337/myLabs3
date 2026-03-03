@@ -20,11 +20,9 @@ namespace operationOverload {
         matrix = new double[size, size];
 
         Random randomGen = new Random();
-        for (int x = 0; x < size; x++) {
-          for (int y = 0; y < size; y++) {
-            matrix[x,y] = randomGen.Next(-10, 10);
-          Console.WriteLine(matrix[x,y]);
-
+        for (int row = 0; row < size; ++row) {
+          for (int col = 0; col < size; ++col) {
+            matrix[row,col] = randomGen.Next(-10, 10);
           }
         }
     }
@@ -41,9 +39,25 @@ namespace operationOverload {
       matrix = new double[matrixSize, matrixSize];
 
       Array.Copy(newSqrtMatrix, matrix, newSqrtMatrix.Length);
-      
-
+     
     }
+
+    public override string ToString() {
+
+      string result = "";
+
+      for (int row = 0; row < matrixSize; ++row) {
+        for (int col = 0; col < matrixSize; ++col) {
+          result += ((col == 0) ? (""): ("\t")) + matrix[row, col];
+        }
+        result += "\n";
+      }
+      return result;
+    }
+
+    //public override int CompareTo() {
+
+    //}
 
   }
 }
