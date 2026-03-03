@@ -37,6 +37,12 @@ namespace operationOverload {
         throw new ArgumentException("Matrix should be square");
       }
 
+      matrixSize = rows;
+      matrix = new double[matrixSize, matrixSize];
+
+      Array.Copy(newSqrtMatrix, matrix, newSqrtMatrix.Length);
+      
+
     }
 
   }
