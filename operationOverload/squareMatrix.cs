@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,9 +9,8 @@ namespace operationOverload {
   public class squareMatrix : IComparable<squareMatrix>, ICloneable {
 
     private double[,] matrix;
-    public int matrixSize;
-    public const int hashValue = 31;
-
+    private int matrixSize;
+    private const int hashValue = 31;
     private static int seed = 0;
     public squareMatrix(int size, bool isRandGen) {
       if (size <= 0) {
@@ -35,21 +35,6 @@ namespace operationOverload {
       }
     }
 
-    //public squareMatrix(double[,] newSqrtMatrix) {
-    //  int rows = newSqrtMatrix.GetLength(0);
-    //  int columns = newSqrtMatrix.GetLength(1);
-
-    //  if (rows != columns) {
-    //    throw new ArgumentException("Matrix should be square");
-    //  }
-
-    //  matrixSize = rows;
-    //  matrix = new double[matrixSize, matrixSize];
-
-    //  Array.Copy(newSqrtMatrix, matrix, newSqrtMatrix.Length);
-
-    //}
-
     public static squareMatrix operator +(squareMatrix mat1, squareMatrix mat2) {
 
       squareMatrix result = new squareMatrix(mat1.matrixSize, false);
@@ -60,6 +45,14 @@ namespace operationOverload {
         }
       }
       return result;
+    }
+
+    public double calcDeterminant(double[,] detMat) {
+      
+    }
+
+    private double[,] calcMinor() {
+
     }
 
     public object Clone() {
