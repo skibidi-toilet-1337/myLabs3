@@ -32,7 +32,7 @@ namespace operationOverload {
       matrix = new double[size, size];
 
       Random randomGen = new Random(++seed + Environment.TickCount);
-      
+
       for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
 
@@ -48,37 +48,71 @@ namespace operationOverload {
 
     public static squareMatrix operator +(squareMatrix mat1, squareMatrix mat2) {
 
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       squareMatrix result = new squareMatrix(mat1.matrixSize, false);
 
       for (int row = 0; row < mat1.matrixSize; ++row) {
         for (int col = 0; col < mat1.matrixSize; ++col) {
-          result.matrix[row, col] = mat1.matrix[row, col] + mat2.matrix[row,col];
+          result.matrix[row, col] = mat1.matrix[row, col] + mat2.matrix[row, col];
         }
       }
       return result;
     }
 
     public static bool operator >(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       return mat1.determinant() > mat2.determinant();
     }
 
     public static bool operator <(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       return mat1.determinant() < mat2.determinant();
     }
 
     public static bool operator >=(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       return mat1.determinant() >= mat2.determinant();
     }
 
     public static bool operator <=(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       return mat1.determinant() <= mat2.determinant();
     }
 
     public static bool operator ==(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       return mat1.Equals(mat2);
     }
 
     public static bool operator !=(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
       return !mat1.Equals(mat2);
     }
 
@@ -89,7 +123,7 @@ namespace operationOverload {
     public static bool operator false(squareMatrix mat1) {
       return mat1.determinant() == 0;
     }
-    
+
     public squareMatrix inverse() {
       double det = determinant();
 
@@ -187,7 +221,7 @@ namespace operationOverload {
       squareMatrix otherMatrix = obj as squareMatrix;
 
       if (this.matrixSize != otherMatrix.matrixSize) {
-        throw new ArgumentException("The size of the matrices must be the same.");
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
       }
 
       for (int row = 0; row < matrixSize; ++row) {
@@ -209,6 +243,6 @@ namespace operationOverload {
       return hash;
     }
 
-  
+
   }
 }
