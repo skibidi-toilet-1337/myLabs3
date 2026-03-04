@@ -22,6 +22,7 @@ namespace operationOverload {
       Console.WriteLine(mat3);
       mat3 = mat1 + mat2;
       Console.WriteLine(mat3);
+      Console.WriteLine(mat3.determinant());
     }
   }
 }

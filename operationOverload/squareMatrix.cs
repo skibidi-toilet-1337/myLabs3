@@ -47,22 +47,26 @@ namespace operationOverload {
       return result;
     }
 
+   public double determinant() {
+      return calcDeterminant(matrix);
+    }
+
     public double calcDeterminant(double[,] detMat) {
 
-      int n = detMat.GetLength(0);
+      int size = detMat.GetLength(0);
 
-      if (n == 1) {
+      if (size == 1) {
         return detMat[0, 0];
       }
 
-      if (n == 2) {
+      if (size == 2) {
         return detMat[0, 0] * detMat[1, 1] - detMat[0, 1] * detMat[1, 0];
       }
 
       double det = 0;
 
-      for (int power = 0; power < n; ++power) {
-        double[,] minor = calcMinor(matrix, 0, power);
+      for (int power = 0; power < size; ++power) {
+        double[,] minor = calcMinor(detMat, 0, power);
         det += detMat[0, power] * Math.Pow(-1, power) * calcDeterminant(minor);
       }
       return det;
@@ -81,7 +85,7 @@ namespace operationOverload {
 
         for (int cycleCol = 0; cycleCol < size; ++cycleCol) {
           if (cycleCol == col) continue;
-          minor[cycleRow, cycleCol] = minorMat[cycleRow, cycleCol];
+          minor[localRow, localCol] = minorMat[cycleRow, cycleCol];
           ++localCol;
         }
         ++localRow;
