@@ -6,6 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace operationOverload {
+
+  public class matrixNotInvertible : Exception {
+    public matrixNotInvertible(string message) : base(message) {
+    }
+  }
+
+  public class matricesMismatchSize : Exception {
+    public matricesMismatchSize(string message) : base(message) {
+    }
+  }
+
   public class squareMatrix : IComparable<squareMatrix>, ICloneable {
 
     private double[,] matrix;
@@ -77,6 +88,25 @@ namespace operationOverload {
 
     public static bool operator false(squareMatrix mat1) {
       return mat1.determinant() == 0;
+    }
+    
+    public squareMatrix inverse() {
+      double det = determinant();
+
+      if (det == 0) {
+        throw new matrixNotInvertible("There is no inverse matrix because the determinant is zero.");
+      }
+
+      int size = matrixSize;
+      squareMatrix resultMat = new squareMatrix(size, false);
+
+      for (int row = 0; row < size; ++row) {
+        for (int col = 0; col < size; ++col) {
+          double[,] minorMat = calcMinor(matrix, row, col);
+          resultMat.matrix[row, col] = Math.Pow(-1, row + col) * calcDeterminant(minorMat) / det;
+        }
+      }
+      return resultMat;
     }
 
     public double determinant() {
