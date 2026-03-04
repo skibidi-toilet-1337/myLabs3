@@ -47,7 +47,39 @@ namespace operationOverload {
       return result;
     }
 
-   public double determinant() {
+    public static bool operator >(squareMatrix mat1, squareMatrix mat2) {
+      return mat1.determinant() > mat2.determinant();
+    }
+
+    public static bool operator <(squareMatrix mat1, squareMatrix mat2) {
+      return mat1.determinant() < mat2.determinant();
+    }
+
+    public static bool operator >=(squareMatrix mat1, squareMatrix mat2) {
+      return mat1.determinant() >= mat2.determinant();
+    }
+
+    public static bool operator <=(squareMatrix mat1, squareMatrix mat2) {
+      return mat1.determinant() <= mat2.determinant();
+    }
+
+    public static bool operator ==(squareMatrix mat1, squareMatrix mat2) {
+      return mat1.Equals(mat2);
+    }
+
+    public static bool operator !=(squareMatrix mat1, squareMatrix mat2) {
+      return !mat1.Equals(mat2);
+    }
+
+    public static bool operator true(squareMatrix mat1) {
+      return mat1.determinant() != 0;
+    }
+
+    public static bool operator false(squareMatrix mat1) {
+      return mat1.determinant() == 0;
+    }
+
+    public double determinant() {
       return calcDeterminant(matrix);
     }
 
