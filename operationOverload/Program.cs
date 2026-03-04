@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace operationOverload {
   internal class Program {
 
+    static squareMatrix matA, matB;
+
     static void showMenu() {
       Console.WriteLine("\nMenu:\n" +
         "----------------\n" +
@@ -24,6 +26,7 @@ namespace operationOverload {
         "12: Det B\n" +
         "13: Inv A\n" +
         "14: Inv B\n" +
+        "15: Show matrices\n" +
         "----------------\n" +
         "0: Exit\n");
       Console.Write("Select option: ");
@@ -62,8 +65,90 @@ namespace operationOverload {
       }
     }
     static void Main(string[] args) {
-      showMenu();
-      //test();
+
+      string option;
+      matA = new squareMatrix(1, false);
+      matB = new squareMatrix(1, false);
+      while (true) {
+        showMenu();
+        option = Console.ReadLine();
+        Console.WriteLine("");
+
+        switch (option) {
+
+          //Exit
+          case "0":
+            return;
+          
+          //Set matrix A
+          case "1":
+            matA.inputMatrix();
+            break;
+
+          //Set matrix B
+          case "2":
+            matB.inputMatrix();
+            break;
+
+          //A + B
+          case "3":
+            Console.WriteLine($"A + B:\n{matA + matB}");
+            break;
+
+          //A * B
+          case "4":
+            //Console.WriteLine($"A * B:\n{matA * matB}");
+            break;
+
+          //A > B
+          case "5":
+            break;
+
+          //A < B
+          case "6":
+            break;
+
+          //A <= B
+          case "7":
+            break;
+
+          //A >= B
+          case "8":
+            break;
+
+          //A == B
+          case "9":
+            break;
+
+          //A != B
+          case "10":
+            break;
+
+          //Det A
+          case "11":
+            break;
+
+          //Det B
+          case "12":
+            break;
+
+          //Inv A
+          case "13":
+            break;
+
+          //Inv B
+          case "14":
+            break;
+
+          //Show matrices
+          case "15":
+            Console.WriteLine($"Matrix A:\n{matA}\n");
+            Console.WriteLine($"Matrix B:\n{matB}\n");
+            break;
+
+        }
+
+      }
 
     }
   }

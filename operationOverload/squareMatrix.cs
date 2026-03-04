@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -40,6 +41,32 @@ namespace operationOverload {
             matrix[row, col] = randomGen.Next(-10, 10);
           } else {
             matrix[row, col] = 0;
+          }
+
+        }
+      }
+    }
+
+    public void inputMatrix() {
+      Console.Write("Set size: ");
+      if (int.TryParse(Console.ReadLine(), out int inMatSize)) {
+        matrixSize = inMatSize;
+      } else {
+        throw new matricesMismatchSize("Wrong value. Must be integer.");
+      }
+
+      matrix = new double[matrixSize, matrixSize];
+
+      for (int row = 0; row < matrixSize; ++row) {
+        for (int col = 0; col < matrixSize; ++col) {
+
+          //cout << "enter num of " << row + 1 << "; " << column + 1 << ": ";
+          Console.Write($"Enter [{row + 1},{col + 1}] = ");
+
+          if (double.TryParse(Console.ReadLine(), out double value)) {
+            matrix[row, col] = value;
+          } else {
+            throw new ArgumentException("Wrong value. Must be double.");
           }
 
         }
