@@ -48,11 +48,45 @@ namespace operationOverload {
     }
 
     public double calcDeterminant(double[,] detMat) {
-      
+
+      int n = detMat.GetLength(0);
+
+      if (n == 1) {
+        return detMat[0, 0];
+      }
+
+      if (n == 2) {
+        return detMat[0, 0] * detMat[1, 1] - detMat[0, 1] * detMat[1, 0];
+      }
+
+      double det = 0;
+
+      for (int power = 0; power < n; ++power) {
+        double[,] minor = calcMinor(matrix, 0, power);
+        det += detMat[0, power] * Math.Pow(-1, power) * calcDeterminant(minor);
+      }
+      return det;
     }
 
-    private double[,] calcMinor() {
+    private double[,] calcMinor(double[,] minorMat, int row, int col) {
 
+      int size = minorMat.GetLength(0);
+      double[,] minor = new double[size - 1, size - 1];
+      int localRow = 0;
+      int localCol = 0;
+
+      for (int cycleRow = 0; cycleRow < size; ++cycleRow) {
+        if (cycleRow == row) continue;
+        localCol = 0;
+
+        for (int cycleCol = 0; cycleCol < size; ++cycleCol) {
+          if (cycleCol == col) continue;
+          minor[cycleRow, cycleCol] = minorMat[cycleRow, cycleCol];
+          ++localCol;
+        }
+        ++localRow;
+      }
+      return minor;
     }
 
     public object Clone() {
