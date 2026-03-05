@@ -58,8 +58,6 @@ namespace operationOverload {
 
       for (int row = 0; row < matrixSize; ++row) {
         for (int col = 0; col < matrixSize; ++col) {
-
-          //cout << "enter num of " << row + 1 << "; " << column + 1 << ": ";
           Console.Write($"Enter [{row + 1},{col + 1}] = ");
 
           if (double.TryParse(Console.ReadLine(), out double value)) {
@@ -193,7 +191,6 @@ namespace operationOverload {
     }
 
     public double calcDeterminant(double[,] detMat) {
-
       int size = detMat.GetLength(0);
 
       if (size == 1) {
@@ -214,7 +211,6 @@ namespace operationOverload {
     }
 
     private double[,] calcMinor(double[,] minorMat, int row, int col) {
-
       int size = minorMat.GetLength(0);
       double[,] minor = new double[size - 1, size - 1];
       int localRow = 0;
@@ -246,7 +242,6 @@ namespace operationOverload {
     }
 
     public override string ToString() {
-
       string result = "";
 
       for (int row = 0; row < matrixSize; ++row) {

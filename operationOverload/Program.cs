@@ -35,40 +35,7 @@ namespace operationOverload {
       Console.Write("Select option: ");
     }
 
-    static void test() {
-      //squareMatrix sqrtMtrx = new squareMatrix(4, true);
-      //Console.WriteLine(sqrtMtrx);
-      //Console.WriteLine(sqrtMtrx.ToString());
-      //Console.WriteLine(sqrtMtrx.GetHashCode());
-      try {
-
-        squareMatrix mat1 = new squareMatrix(3, true);
-        Console.WriteLine(mat1);
-
-        squareMatrix mat2 = new squareMatrix(3, true);
-        Console.WriteLine(mat2);
-
-        squareMatrix mat3 = new squareMatrix(3, false);
-
-        if (mat3) {
-          Console.WriteLine("true");
-        } else {
-          Console.WriteLine("false");
-        }
-
-        Console.WriteLine(mat3);
-        mat3 = mat1 + mat2;
-        Console.WriteLine(mat3);
-        Console.WriteLine(mat3.determinant());
-        Console.WriteLine(mat3.inverse());
-      }
-
-      catch (Exception ex) {
-        Console.WriteLine(ex.ToString());
-      }
-    }
     static void Main(string[] args) {
-
       try {
         string option;
         int sizeA = 1;
@@ -83,7 +50,6 @@ namespace operationOverload {
           Console.WriteLine("");
 
           switch (option) {
-
             //Exit
             case "0":
               return;
