@@ -89,6 +89,28 @@ namespace operationOverload {
       return result;
     }
 
+    public static squareMatrix operator *(squareMatrix mat1, squareMatrix mat2) {
+
+      if (mat1.matrixSize != mat2.matrixSize) {
+        throw new matricesMismatchSize("The size of the matrices must be the same.");
+      }
+
+      squareMatrix result = new squareMatrix(mat1.matrixSize, false);
+
+      for(int row = 0; row < mat1.matrixSize; ++row) {
+        for (int col = 0; col < mat1.matrixSize; ++col) {
+
+          result.matrix[row, col] = 0;
+
+          for (int index = 0; index < mat1.matrixSize; ++index) {
+            result.matrix[row, col] += mat1.matrix[row, index] * mat2.matrix[index, col];
+          }
+        }
+
+      }
+      return result;
+    }
+
     public static bool operator >(squareMatrix mat1, squareMatrix mat2) {
 
       if (mat1.matrixSize != mat2.matrixSize) {

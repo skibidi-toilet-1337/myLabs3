@@ -97,7 +97,7 @@ namespace operationOverload {
 
           //A * B
           case "4":
-            //Console.WriteLine($"A * B:\n{matA * matB}");
+            Console.WriteLine($"A * B:\n{matA * matB}");
             break;
 
           //A > B
