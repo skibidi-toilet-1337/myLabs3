@@ -19,11 +19,11 @@ namespace operationOverload {
   }
 
   public class squareMatrix : IComparable<squareMatrix>, ICloneable {
-
     private double[,] matrix;
     private int matrixSize;
     private const int hashValue = 31;
     private static int seed = 0;
+
     public squareMatrix(int size, bool isRandGen) {
       if (size <= 0) {
         throw new ArgumentException("The matrix size must be greater than zero.");
@@ -42,7 +42,6 @@ namespace operationOverload {
           } else {
             matrix[row, col] = 0;
           }
-
         }
       }
     }
@@ -68,7 +67,6 @@ namespace operationOverload {
           } else {
             throw new ArgumentException("Wrong value. Must be double.");
           }
-
         }
       }
     }
@@ -97,16 +95,14 @@ namespace operationOverload {
 
       squareMatrix result = new squareMatrix(mat1.matrixSize, false);
 
-      for(int row = 0; row < mat1.matrixSize; ++row) {
+      for (int row = 0; row < mat1.matrixSize; ++row) {
         for (int col = 0; col < mat1.matrixSize; ++col) {
-
           result.matrix[row, col] = 0;
 
           for (int index = 0; index < mat1.matrixSize; ++index) {
             result.matrix[row, col] += mat1.matrix[row, index] * mat2.matrix[index, col];
           }
         }
-
       }
       return result;
     }
@@ -291,7 +287,5 @@ namespace operationOverload {
       }
       return hash;
     }
-
-
   }
 }
