@@ -11,7 +11,7 @@ using System.Xml;
 namespace StandartInputOutput2 {
 
   [Serializable]
-  public class TextFile {
+  public class TextFile : IOriginator {
 
     public string inputText { get; set; }
     public TextFile() {
@@ -21,6 +21,20 @@ namespace StandartInputOutput2 {
     public TextFile(string text) {
       inputText = text;
     }
+
+    object IOriginator.GetMemento() {
+      return new Memento {
+        inputText = this.inputText
+      };
+    }
+
+    void IOriginator.SetMemento(object memento) {
+      if (memento is Memento) {
+        var mem = memento as Memento;
+        inputText = mem.inputText;
+      }
+    }
+
     public void SerializeBinary(FileStream fs) {
       BinaryFormatter bf = new BinaryFormatter();
       bf.Serialize(fs, this);

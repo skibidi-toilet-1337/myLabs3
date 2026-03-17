@@ -10,7 +10,21 @@ namespace StandartInputOutput2 {
   internal class Program {
     static void Main(string[] args) {
 
-      //FileStream fs = new FileStream("D:\\newText.bin", FileMode.OpenOrCreate, FileAccess.Write);
+      TextFile tf = new TextFile("Hello World");
+      Caretacker caretacker = new Caretacker();
+
+      tf.Print();
+      caretacker.SaveState(tf);
+
+      tf = new TextFile("Lorem Ipsum");
+      tf.Print();
+
+      caretacker.RestoreState(tf);
+      tf.Print();
+
+    }
+    void testSerDeser() {
+
       string path = "D:\\newText";
       TextFile tf = new TextFile("Lorem Ipsum");
 
@@ -30,9 +44,8 @@ namespace StandartInputOutput2 {
 
         tf.DeserializeXML(fs);
         Console.WriteLine("Object has been XML deserialized");
-
       }
-
     }
+
   }
 }
