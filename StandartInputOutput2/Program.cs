@@ -10,9 +10,6 @@ using static System.Net.Mime.MediaTypeNames;
 namespace StandartInputOutput2 {
   internal class Program {
 
-    private TextFile file;
-    private Caretacker caretacker = new Caretacker();
-
     static void Main(string[] args) {
 
       /*TextFile tf = new TextFile("Hello World");
@@ -28,8 +25,11 @@ namespace StandartInputOutput2 {
       tf.Print();*/
 
       string option;
-      string path;
-      TextFile file;
+      string path = "";
+      TextFile file = new TextFile("");
+      Caretacker caretacker = new Caretacker();
+      FileSearcher searcher = new FileSearcher();
+      List<string> keywords = new List<string>();
 
       while (true) {
 
@@ -37,11 +37,10 @@ namespace StandartInputOutput2 {
          "----------------\n" +
          "1: Open file (enter path)\n" +
          "2: Find file by keywords\n" +
-         "3: Create file\n" +
+         //"3: Create file\n" +
          "4: Show text of file\n" +
-         "5: Edit file\n" +
-         "6: Save as bin\n" +
-         "7: Save as xml\n" +
+         "5: Edit file (or start new)\n" +
+         "6: Save as xml\n" +
          "----------------\n" +
          "Special:\n" +
          "----------------\n" +
@@ -59,34 +58,68 @@ namespace StandartInputOutput2 {
             break;
 
           case "2":
-            path = Console.ReadLine();
+            Console.Write("Enter keywords separated by spaces: ");
+            string kws = Console.ReadLine();
+            string[] splittedKeywords = kws.Split(' ');
+
+            foreach (var kw in splittedKeywords) {
+              keywords.Add(kw);
+            }
+
+            var searchedFiles = searcher.SearchFiles(path, keywords);
+
+            Console.WriteLine("Your keywords: ");
+            foreach (var keyword in keywords) {
+              Console.WriteLine($"\t{keyword}");
+            }
+
+            Console.WriteLine("Matching files: ");
+            foreach (var sfile in searchedFiles) {
+              Console.WriteLine($"\t{sfile}");
+            }
+
+            Console.WriteLine();
+
+            searcher.BuildIndexation(path, keywords);
+            searcher.Print();
             break;
 
-          case "3":
+          /*case "3":
             Console.Write("Enter path (D:\\test): ");
             path = Console.ReadLine();
             string inputText = Console.ReadLine();
             file = new TextFile(inputText);
-            break;
+            break;*/
 
           case "4":
+            Console.Write("Enter path (D:\\test): ");
             path = Console.ReadLine();
+
+            file.Print();
             break;
 
           case "5":
-            path = Console.ReadLine();
+            caretacker.SaveState(file);
+            Console.Write("Enter new text: ");
+            file.inputText = Console.ReadLine();
             break;
 
           case "6":
+            Console.Write("Enter path (D:\\test): ");
             path = Console.ReadLine();
+
+            using (FileStream fs = new FileStream(path + ".xml", FileMode.OpenOrCreate, FileAccess.Write)) {
+              file.SerializeXML(fs);
+              Console.WriteLine("Object has been XML serialized and saved");
+            }
             break;
 
-          case "7":
+          /*case "7":
             path = Console.ReadLine();
-            break;
+            break;*/
 
           case "Z":
-            path = Console.ReadLine();
+            caretacker.RestoreState(file);
             break;
 
           case "0":
@@ -122,7 +155,7 @@ namespace StandartInputOutput2 {
       }
     }
 
-    void testSearchAndIndex() {
+   /* void testSearchAndIndex() {
       FileSearcher searcher = new FileSearcher();
       List<string> keywords = new List<string>() { "Lorem", "skibidi" };
       string path = "D:\\Test";
@@ -142,7 +175,7 @@ namespace StandartInputOutput2 {
 
       searcher.BuildIndexation(path, keywords);
       searcher.Print();
-    }
+    }*/
 
   }
 }
