@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace StandartInputOutput2 {
   internal class Program {
     static void Main(string[] args) {
 
-      TextFile tf = new TextFile("Hello World");
+      /*TextFile tf = new TextFile("Hello World");
       Caretacker caretacker = new Caretacker();
 
       tf.Print();
@@ -20,7 +21,12 @@ namespace StandartInputOutput2 {
       tf.Print();
 
       caretacker.RestoreState(tf);
-      tf.Print();
+      tf.Print();*/
+
+     FileSearcher searcher = new FileSearcher();
+     List<string> kw = new List<string>() {"Lorem"};
+     
+     searcher.SearchFiles("D:\\Test", kw);
 
     }
     void testSerDeser() {
