@@ -18,6 +18,7 @@ namespace StandartInputOutput2 {
       foreach (var file in files) {
         string fileContent = File.ReadAllText(file);
 
+        //тут хз либо Any, либо All.
         if (keywords.Any(keyword => fileContent.Contains(keyword))) {
 
           result.Add(file);
@@ -28,8 +29,25 @@ namespace StandartInputOutput2 {
       }
       return result;
     }
+  }
+
+  public class Indexator {
+
+    public Dictionary<string, List<string>> BuildIndexation(string path, List<string> keywords) {
+
+      var result = new Dictionary<string, List<string>>();
+
+      foreach (var keyword in keywords) {
+        result[keyword] = new List<string>();
+      }
+
+      return result;
+
+
+    }
 
   }
+
 
 }
 

@@ -24,7 +24,7 @@ namespace StandartInputOutput2 {
       tf.Print();*/
 
      FileSearcher searcher = new FileSearcher();
-     List<string> kw = new List<string>() {"Lorem"};
+     List<string> kw = new List<string>() {"Lorem", "skibidi"};
      
      searcher.SearchFiles("D:\\Test", kw);
 
