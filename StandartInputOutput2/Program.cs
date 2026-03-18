@@ -24,9 +24,24 @@ namespace StandartInputOutput2 {
       tf.Print();*/
 
      FileSearcher searcher = new FileSearcher();
-     List<string> kw = new List<string>() {"Lorem", "skibidi"};
-     
-     searcher.SearchFiles("D:\\Test", kw);
+     List<string> keywords = new List<string>() {"Lorem", "skibidi"};
+      string path = "D:\\Test";
+     var searchedFiles = searcher.SearchFiles(path, keywords);
+
+      Console.WriteLine("Your keywords: ");
+      foreach (var keyword in keywords) { 
+        Console.WriteLine($"\t{keyword}");
+     }
+
+      Console.WriteLine("Matching files: ");
+      foreach (var file in searchedFiles) {
+        Console.WriteLine($"\t{file}");
+      }
+
+      Console.WriteLine();
+
+     searcher.BuildIndexation(path, keywords);
+     searcher.Print();
 
     }
     void testSerDeser() {

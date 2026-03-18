@@ -11,6 +11,8 @@ using System.Xml.Serialization;
 namespace StandartInputOutput2 {
   internal class FileSearcher {
 
+    private Dictionary<string, List<string>> indexes;
+
     public List<string> SearchFiles(string path, List<string> keywords) {
       var result = new List<string>();
       var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Where(name => name.EndsWith(".txt") || name.EndsWith(".bin") || name.EndsWith(".xml"));
@@ -22,32 +24,38 @@ namespace StandartInputOutput2 {
         if (keywords.Any(keyword => fileContent.Contains(keyword))) {
 
           result.Add(file);
-          Console.WriteLine(file);
 
         }
 
       }
       return result;
     }
-  }
 
-  public class Indexator {
+    public void BuildIndexation(string path, List<string> keywords) {
 
-    public Dictionary<string, List<string>> BuildIndexation(string path, List<string> keywords) {
-
-      var result = new Dictionary<string, List<string>>();
+      indexes = new Dictionary<string, List<string>>();
 
       foreach (var keyword in keywords) {
-        result[keyword] = new List<string>();
+        var oneKeywordButList = new List<string>();
+        oneKeywordButList.Add(keyword);
+        indexes[keyword] = SearchFiles(path, oneKeywordButList);
+
       }
+    }
 
-      return result;
+    public void Print() {
 
+      foreach (var index in indexes) {
+        Console.WriteLine($"{index.Key}: ");
+
+        foreach (var value in index.Value) {
+          Console.WriteLine("\t" + value);
+        }
+      }
 
     }
 
   }
-
 
 }
 
