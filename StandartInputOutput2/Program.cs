@@ -9,21 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace StandartInputOutput2 {
   internal class Program {
-
     static void Main(string[] args) {
-
-      /*TextFile tf = new TextFile("Hello World");
-      Caretacker caretacker = new Caretacker();
-
-      tf.Print();
-      caretacker.SaveState(tf);
-
-      tf = new TextFile("Lorem Ipsum");
-      tf.Print();
-
-      caretacker.RestoreState(tf);
-      tf.Print();*/
-
       string option;
       string path = "";
       TextFile file = new TextFile("");
@@ -38,15 +24,16 @@ namespace StandartInputOutput2 {
          "----------------\n" +
          "1: Open file (enter path)\n" +
          "2: Find file by keywords\n" +
-         "3: Show text of file\n" +
+         "3: Show text of .xml file\n" +
          "4: Edit file (or start new)\n" +
-         "5: Save as xml\n" +
+         "5: Save as .xml\n" +
          "----------------\n" +
          "Special:\n" +
          "----------------\n" +
          "Z: Undo changes\n" +
          "----------------\n" +
          "0: Exit\n");
+
         Console.Write("Select option: ");
         option = Console.ReadLine();
 
@@ -87,7 +74,6 @@ namespace StandartInputOutput2 {
 
           case "3":
             Console.WriteLine($"{fileName}: ");
-
             using (FileStream fs = new FileStream(path + ".xml", FileMode.OpenOrCreate, FileAccess.Read)) {
               file.DeserializeXML(fs);
               Console.WriteLine("Object has been XML deserialized");
@@ -124,51 +110,5 @@ namespace StandartInputOutput2 {
         }
       }
     }
-    void testSerDeser() {
-
-      string path = "D:\\newText";
-      TextFile tf = new TextFile("Lorem Ipsum");
-
-      using (FileStream fs = new FileStream(path + ".bin", FileMode.OpenOrCreate, FileAccess.ReadWrite)) {
-        tf.SerializeBinary(fs);
-        Console.WriteLine("Object has been binary serialized");
-        fs.Seek(0, SeekOrigin.Begin);
-
-        tf.DeserializeBinary(fs);
-        Console.WriteLine("Object has been binary deserialized");
-      }
-
-      using (FileStream fs = new FileStream(path + ".xml", FileMode.OpenOrCreate, FileAccess.ReadWrite)) {
-        tf.SerializeXML(fs);
-        Console.WriteLine("Object has been XML serialized");
-        fs.Seek(0, SeekOrigin.Begin);
-
-        tf.DeserializeXML(fs);
-        Console.WriteLine("Object has been XML deserialized");
-      }
-    }
-
-    /* void testSearchAndIndex() {
-       FileSearcher searcher = new FileSearcher();
-       List<string> keywords = new List<string>() { "Lorem", "skibidi" };
-       string path = "D:\\Test";
-       var searchedFiles = searcher.SearchFiles(path, keywords);
-
-       Console.WriteLine("Your keywords: ");
-       foreach (var keyword in keywords) {
-         Console.WriteLine($"\t{keyword}");
-       }
-
-       Console.WriteLine("Matching files: ");
-       foreach (var file in searchedFiles) {
-         Console.WriteLine($"\t{file}");
-       }
-
-       Console.WriteLine();
-
-       searcher.BuildIndexation(path, keywords);
-       searcher.Print();
-     }*/
-
   }
 }
