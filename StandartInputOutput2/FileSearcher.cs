@@ -20,13 +20,11 @@ namespace StandartInputOutput2 {
       foreach (var file in files) {
         string fileContent = File.ReadAllText(file);
 
-        //тут хз либо Any, либо All.
         if (keywords.Any(keyword => fileContent.Contains(keyword))) {
 
           result.Add(file);
 
         }
-
       }
       return result;
     }
@@ -52,10 +50,7 @@ namespace StandartInputOutput2 {
           Console.WriteLine("\t" + value);
         }
       }
-
     }
-
   }
-
 }
 

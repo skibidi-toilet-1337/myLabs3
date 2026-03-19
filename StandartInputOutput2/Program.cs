@@ -30,6 +30,7 @@ namespace StandartInputOutput2 {
       Caretacker caretacker = new Caretacker();
       FileSearcher searcher = new FileSearcher();
       List<string> keywords = new List<string>();
+      string fileName = "";
 
       while (true) {
 
@@ -37,10 +38,9 @@ namespace StandartInputOutput2 {
          "----------------\n" +
          "1: Open file (enter path)\n" +
          "2: Find file by keywords\n" +
-         //"3: Create file\n" +
-         "4: Show text of file\n" +
-         "5: Edit file (or start new)\n" +
-         "6: Save as xml\n" +
+         "3: Show text of file\n" +
+         "4: Edit file (or start new)\n" +
+         "5: Save as xml\n" +
          "----------------\n" +
          "Special:\n" +
          "----------------\n" +
@@ -55,6 +55,7 @@ namespace StandartInputOutput2 {
           case "1":
             Console.Write("Enter path (D:\\test): ");
             path = Console.ReadLine();
+            fileName = Path.GetFileName(path);
             break;
 
           case "2":
@@ -84,39 +85,35 @@ namespace StandartInputOutput2 {
             searcher.Print();
             break;
 
-          /*case "3":
-            Console.Write("Enter path (D:\\test): ");
-            path = Console.ReadLine();
-            string inputText = Console.ReadLine();
-            file = new TextFile(inputText);
-            break;*/
+          case "3":
+            Console.WriteLine($"{fileName}: ");
 
-          case "4":
-            Console.Write("Enter path (D:\\test): ");
-            path = Console.ReadLine();
+            using (FileStream fs = new FileStream(path + ".xml", FileMode.OpenOrCreate, FileAccess.Read)) {
+              file.DeserializeXML(fs);
+              Console.WriteLine("Object has been XML deserialized");
+            }
 
             file.Print();
             break;
 
-          case "5":
+          case "4":
             caretacker.SaveState(file);
-            Console.Write("Enter new text: ");
+            Console.Write("Your previous text: ");
+            file.Print();
+            Console.Write("\nEnter new text: ");
             file.inputText = Console.ReadLine();
             break;
 
-          case "6":
+          case "5":
             Console.Write("Enter path (D:\\test): ");
             path = Console.ReadLine();
+            fileName = Path.GetFileName(path);
 
             using (FileStream fs = new FileStream(path + ".xml", FileMode.OpenOrCreate, FileAccess.Write)) {
               file.SerializeXML(fs);
               Console.WriteLine("Object has been XML serialized and saved");
             }
             break;
-
-          /*case "7":
-            path = Console.ReadLine();
-            break;*/
 
           case "Z":
             caretacker.RestoreState(file);
@@ -125,11 +122,7 @@ namespace StandartInputOutput2 {
           case "0":
             return;
         }
-
       }
-    
-
-
     }
     void testSerDeser() {
 
@@ -155,27 +148,27 @@ namespace StandartInputOutput2 {
       }
     }
 
-   /* void testSearchAndIndex() {
-      FileSearcher searcher = new FileSearcher();
-      List<string> keywords = new List<string>() { "Lorem", "skibidi" };
-      string path = "D:\\Test";
-      var searchedFiles = searcher.SearchFiles(path, keywords);
+    /* void testSearchAndIndex() {
+       FileSearcher searcher = new FileSearcher();
+       List<string> keywords = new List<string>() { "Lorem", "skibidi" };
+       string path = "D:\\Test";
+       var searchedFiles = searcher.SearchFiles(path, keywords);
 
-      Console.WriteLine("Your keywords: ");
-      foreach (var keyword in keywords) {
-        Console.WriteLine($"\t{keyword}");
-      }
+       Console.WriteLine("Your keywords: ");
+       foreach (var keyword in keywords) {
+         Console.WriteLine($"\t{keyword}");
+       }
 
-      Console.WriteLine("Matching files: ");
-      foreach (var file in searchedFiles) {
-        Console.WriteLine($"\t{file}");
-      }
+       Console.WriteLine("Matching files: ");
+       foreach (var file in searchedFiles) {
+         Console.WriteLine($"\t{file}");
+       }
 
-      Console.WriteLine();
+       Console.WriteLine();
 
-      searcher.BuildIndexation(path, keywords);
-      searcher.Print();
-    }*/
+       searcher.BuildIndexation(path, keywords);
+       searcher.Print();
+     }*/
 
   }
 }
