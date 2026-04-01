@@ -11,16 +11,17 @@ namespace StringsAndCollections {
     static void Main(string[] args) {
       string path;
       string wordFind = "[а-яёЁА-Яa-zA-Z]+";
+      string telNumFind = "(\\((\\d)(\\d+)\\)\\s(\\d+)-(\\d+)-(\\d+))";
+      string telNumReplPattern = "+38$2 $3 $4 $5 $6";
+
+      Regex telNumRegex = new Regex(telNumFind);
       Regex regex = new Regex(wordFind);
 
-      Console.Write(@"Enter directory path (D:\test): ");
-      //path = Console.ReadLine();
-      path = "D:\\Test\\";
+      Console.Write(@"Enter directory path (D:\Test): ");
+      path = Console.ReadLine();
 
       var fileNames = Directory.GetFiles(path, "*.txt", SearchOption.AllDirectories);
-
       var wrongWordsDict = GetWrongDictionary();
-
 
       Console.WriteLine("\nFounded files: ");
 
@@ -29,22 +30,19 @@ namespace StringsAndCollections {
         Console.WriteLine(fileName);
 
         MatchCollection matches = regex.Matches(fileContent);
-        Console.WriteLine();
 
         foreach (Match match in matches) {
           string word = match.Value;
           string correctWord = "";
 
           if (wrongWordsDict.TryGetValue(word.ToLower(), out correctWord)) {
-
             Regex regex1 = new Regex($"{word}");
             fileContent = regex1.Replace(fileContent, MatchWordCase(word, correctWord));
-
           }
         }
 
-        Console.WriteLine();
-        Console.WriteLine(fileContent);
+        fileContent = telNumRegex.Replace(fileContent, telNumReplPattern);
+        Console.WriteLine("\n"+fileContent+"\n");
       }
     }
 
@@ -101,10 +99,49 @@ namespace StringsAndCollections {
 
         {"магазиин","магазин"},
         {"магазн","магазин"},
-        {"магозин","магазин"}
+        {"магозин","магазин"},
+
+        {"канпьютер","компьютер"},
+        {"компютер","компьютер"},
+        {"компьютир","компьютер"},
+
+        {"теливизор","телевизор"},
+        {"телевизир","телевизор"},
+        {"телифизор","телевизор"},
+
+        {"интирнет","интернет"},
+        {"интернетт","интернет"},
+        {"интренет","интернет"},
+
+        {"програма","программа"},
+        {"програм","программа"},
+        {"програмаа","программа"},
+
+        {"унивирситет","университет"},
+        {"университед","университет"},
+        {"универститет","университет"},
+
+        {"студентт","студент"},
+        {"студен","студент"},
+        {"студенть","студент"},
+
+        {"преподователь","преподаватель"},
+        {"преподовательь","преподаватель"},
+        {"препадаватель","преподаватель"},
+
+        {"лекцыя","лекция"},
+        {"лекцыяя","лекция"},
+        {"лексия","лекция"},
+
+        {"заданиее","задание"},
+        {"задане","задание"},
+        {"заданияя","задание"},
+
+        {"решыть","решить"},
+        {"решитьь","решить"},
+        {"решит","решить"}
       };
       return wrongWithWords;
     }
-
   }
 }
